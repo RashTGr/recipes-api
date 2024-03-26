@@ -1,5 +1,6 @@
 package org.raul.receipesweb.controller;
 
+import lombok.AllArgsConstructor;
 import org.raul.receipesweb.model.Category;
 import org.raul.receipesweb.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/category")
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @Autowired
+/*    @Autowired
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
-    }
+    }*/
 
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
