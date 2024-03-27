@@ -17,6 +17,7 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    // implement DTO logic here!!!
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
