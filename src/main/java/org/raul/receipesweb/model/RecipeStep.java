@@ -4,21 +4,22 @@ package org.raul.receipesweb.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.raul.receipesweb.utils.RecipeStepKey;
 
 @Entity
 @Getter
 @Setter
 public class RecipeStep {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private RecipeStepKey id;
 
-    private Integer stepNumber;
+    //    private Integer stepNumber;
     private String description;
     private Integer timePerStepMinutes;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("recipeId")
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 }
