@@ -12,6 +12,7 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
+    // Constructor injection : dependency injection through a constr.
     @Autowired
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
