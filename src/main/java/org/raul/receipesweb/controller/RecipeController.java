@@ -1,5 +1,6 @@
 package org.raul.receipesweb.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.RecipeDTO;
 import org.raul.receipesweb.model.Recipe;
 import org.raul.receipesweb.service.RecipeService;
@@ -11,15 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/recipes")
 public class RecipeController {
 
     private final RecipeService recipeService;
-
-    @Autowired
-    public RecipeController(RecipeService recipeService) {
-        this.recipeService = recipeService;
-    }
 
     @GetMapping
     public ResponseEntity<List<RecipeDTO>> getAllRecipes() {
