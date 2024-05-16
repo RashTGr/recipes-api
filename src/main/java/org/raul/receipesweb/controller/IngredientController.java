@@ -21,17 +21,17 @@ public class IngredientController {
 
     @GetMapping
     public ResponseEntity<List<IngredientDTO>> getAllIngredients() {
-        List<IngredientDTO> ingredients = ingredientService.getAllIngredients()
-                .stream()
-                .map(ingredient -> new IngredientDTO(ingredient.getId(), ingredient.getName()))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(ingredients);
+        return ResponseEntity.ok(ingredientService.getAllIngredients());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<IngredientDTO> getIngredientById(@PathVariable Long id) {
+        return ResponseEntity.ok(ingredientService.getIngredientById(id));
     }
 
     @PostMapping
     public ResponseEntity<IngredientDTO> addIngredient(@RequestBody IngredientDTO ingredientDTO) {
-        IngredientDTO saved = ingredientService.addIngredient(ingredientDTO);
-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        return ResponseEntity.ok(ingredientService.addIngredient(ingredientDTO));
     }
 
     @DeleteMapping("/{id}")
