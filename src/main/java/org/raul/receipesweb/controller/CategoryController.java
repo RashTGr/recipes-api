@@ -1,6 +1,7 @@
 package org.raul.receipesweb.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.model.Category;
 import org.raul.receipesweb.service.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -10,16 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/category")
 public class CategoryController {
 
     private final CategoryService categoryService;
-
-/*    @Autowired
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }*/
 
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
@@ -33,7 +29,7 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<Category> addCategory(@RequestBody Category category) {
         Category saved = categoryService.addCategory(category);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);

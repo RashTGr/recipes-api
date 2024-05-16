@@ -33,7 +33,7 @@ public class RecipeController {
         return ResponseEntity.ok(recipeDTO);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<RecipeDTO> addRecipe(@RequestBody RecipeDTO recipeDTO) {
         RecipeDTO saved = recipeService.addRecipe(recipeDTO);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
