@@ -17,15 +17,26 @@ public class RecipeStepController {
     private final RecipeStepService recipeStepService;
 
     @GetMapping("/{recipeId}/{stepNumber}")
-    public ResponseEntity<RecipeStepDTO> getRecipeStep(@PathVariable Long recipeId, @PathVariable Integer stepNumber) {
+    public ResponseEntity<RecipeStepDTO> getRecipeStep(@PathVariable Long recipeId,
+                                                       @PathVariable Integer stepNumber) {
         RecipeStepKey id = new RecipeStepKey(recipeId, stepNumber);
         RecipeStepDTO recipeStepDTO = recipeStepService.findById(id);
         return ResponseEntity.ok(recipeStepDTO);
     }
 
     @PostMapping("/{recipeId}")
-    public ResponseEntity<RecipeStepDTO> addRecipeStep(@PathVariable Long recipeId, @RequestBody RecipeStepDTO recipeStepDTO) {
+    public ResponseEntity<RecipeStepDTO> addRecipeStep(@PathVariable Long recipeId,
+                                                       @RequestBody RecipeStepDTO recipeStepDTO) {
         RecipeStepDTO saveStep = recipeStepService.saveRecipeStep(recipeId, recipeStepDTO);
         return new ResponseEntity<>(saveStep, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{recipeId}/{stepNumber}")
+    public ResponseEntity<RecipeStepDTO> updateRecipeStep(@PathVariable Long recipeId,
+                                                          @PathVariable Integer stepNumber,
+                                                          @RequestBody RecipeStepDTO recipeStepDTO) {
+        RecipeStepDTO updatedDTO = recipeStepService.updateStep(recipeId, stepNumber, recipeStepDTO);
+
+        return new ResponseEntity<>(updatedDTO, HttpStatus.OK);
     }
 }

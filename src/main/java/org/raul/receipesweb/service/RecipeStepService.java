@@ -18,7 +18,7 @@ public class RecipeStepService {
     private final RecipeStepRepository stepsRepository;
     private final RecipeRepository recipeRepository;
 
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public RecipeStepDTO findById(RecipeStepKey id) {
         RecipeStep recipeStep = stepsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe step with this ID not found!"));
@@ -49,4 +49,24 @@ public class RecipeStepService {
                 recipeStep.getTimePerStepMinutes()
         );
     }
+
+    public RecipeStepDTO updateStep(Long recipeId, Integer stepNo, RecipeStepDTO recipeStepDTO) {
+        RecipeStepKey id = new RecipeStepKey(recipeId, stepNo); // creating composite key
+
+        // Find if this recipe exists with the created composite key
+        RecipeStep existingRecipeStep = stepsRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe step with this ID not found!"));
+
+        existingRecipeStep.setDescription(recipeStepDTO.getDescription());
+        existingRecipeStep.setTimePerStepMinutes(recipeStepDTO.getTimePerStepMinutes());
+
+        RecipeStep updated = stepsRepository.save(existingRecipeStep);
+
+        return new RecipeStepDTO(
+                updated.getId().getStepNumber(),
+                updated.getDescription(),
+                updated.getTimePerStepMinutes()
+        );
+    }
+
 }
