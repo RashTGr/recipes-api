@@ -33,4 +33,7 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL) // 'orphanRemoval = true' to be considered if need be
     private Set<RecipeStep> steps = new HashSet<>();
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private Set<IngredientRequirement> ingredientRequirements = new HashSet<>();
 }

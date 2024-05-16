@@ -1,5 +1,6 @@
 package org.raul.receipesweb.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.RecipeStepDTO;
 import org.raul.receipesweb.exception.ResourceNotFoundException;
@@ -69,4 +70,10 @@ public class RecipeStepService {
         );
     }
 
+    public void deleteRecipeStep(RecipeStepKey id) {
+        if (!stepsRepository.existsById(id)) {
+            throw new EntityNotFoundException("No step found to delete for ID: " + id);
+        }
+        stepsRepository.deleteById(id);
+    }
 }

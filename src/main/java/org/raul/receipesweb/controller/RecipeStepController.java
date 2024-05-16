@@ -39,4 +39,13 @@ public class RecipeStepController {
 
         return new ResponseEntity<>(updatedDTO, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{recipeId}/{stepNumber}")
+    public ResponseEntity<Void> deleteRecipeStep(@PathVariable Long recipeId,
+                                                   @PathVariable Integer stepNumber) {
+        RecipeStepKey id = new RecipeStepKey(recipeId, stepNumber);
+        recipeStepService.deleteRecipeStep(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
