@@ -1,5 +1,6 @@
 package org.raul.receipesweb.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.RecipeDTO;
 import org.raul.receipesweb.model.Recipe;
@@ -31,7 +32,7 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipeDTO> addRecipe(@RequestBody RecipeDTO recipeDTO) {
+    public ResponseEntity<RecipeDTO> addRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
         RecipeDTO saved = recipeService.addRecipe(recipeDTO);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
