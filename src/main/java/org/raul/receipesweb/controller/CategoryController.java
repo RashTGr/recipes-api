@@ -1,7 +1,7 @@
 package org.raul.receipesweb.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.raul.receipesweb.dto.CategoryDTO;
 import org.raul.receipesweb.model.Category;
 import org.raul.receipesweb.service.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -18,14 +18,14 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categoryList = categoryService.getAllCategories();
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+        List<CategoryDTO> categoryList = categoryService.getAllCategories();
         return ResponseEntity.ok(categoryList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        Category category = categoryService.getCategoryById(id);
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
+        CategoryDTO category = categoryService.getCategoryById(id);
         return ResponseEntity.ok(category);
     }
 
