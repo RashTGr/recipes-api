@@ -14,7 +14,6 @@ public class RecipeStep {
     @EmbeddedId
     private RecipeStepKey id;
 
-    // private Integer stepNumber;
     private String description;
     private Integer timePerStepMinutes;
 

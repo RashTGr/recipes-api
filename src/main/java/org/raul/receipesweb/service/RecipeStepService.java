@@ -19,7 +19,6 @@ public class RecipeStepService {
     private final RecipeStepRepository stepsRepository;
     private final RecipeRepository recipeRepository;
 
-//    @Transactional(readOnly = true)
     public RecipeStepDTO findById(RecipeStepKey id) {
         RecipeStep recipeStep = stepsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe step with this ID not found!"));

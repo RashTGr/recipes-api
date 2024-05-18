@@ -9,7 +9,6 @@ import org.raul.receipesweb.utils.RecipeStepKey;
 @Getter
 @Setter
 public class RecipeStepDTO {
-//    private RecipeStepKey id;
     private Integer stepNo;
     private String description;
     private Integer timePerStepMinutes;

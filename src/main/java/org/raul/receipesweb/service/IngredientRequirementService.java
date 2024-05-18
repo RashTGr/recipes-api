@@ -1,6 +1,5 @@
 package org.raul.receipesweb.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.IngredientRequirementDTO;
 import org.raul.receipesweb.exception.ResourceNotFoundException;
@@ -27,7 +26,7 @@ public class IngredientRequirementService {
     public IngredientRequirementDTO getIngredientReqById(RecipeIngredientKey id) {
         IngredientRequirement ingredientReq = ingredientRequirementRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find recipe with id :: " + id.getRecipeId()
-                + " and ingredient ID: " + id.getIngredientId()));
+                        + " and ingredient ID: " + id.getIngredientId()));
 
         String unitName = null;
         Long unitId = null;

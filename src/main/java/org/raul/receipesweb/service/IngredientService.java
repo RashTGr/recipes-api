@@ -28,8 +28,7 @@ public class IngredientService {
 
         return new IngredientDTO(
                 ingredient.getId(),
-                ingredient.getName()
-        );
+                ingredient.getName());
     }
 
     public IngredientDTO addIngredient(IngredientDTO ingredientDTO) {
@@ -39,13 +38,12 @@ public class IngredientService {
 
         return new IngredientDTO(
                 ingredient.getId(),
-                ingredient.getName()
-        );
+                ingredient.getName());
     }
 
     public void deleteIngredient(Long id) {
         Ingredient ingredient = ingredientRepository.findById(id)
-                        .orElseThrow(() -> new ResourceNotFoundException("Couldn't found recipe with id :: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Couldn't found recipe with id :: " + id));
 
         ingredientRepository.deleteById(id);
     }

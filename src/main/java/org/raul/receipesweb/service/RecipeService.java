@@ -59,8 +59,7 @@ public class RecipeService {
                 recipe.getImage(),
                 recipe.getAverageScore(),
                 recipe.getTotalTimeMinutes(),
-                recipe.getIsFavourite()
-        );
+                recipe.getIsFavourite());
     }
 
     public void deleteRecipe(Long id) {

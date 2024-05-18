@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.RecipeStepDTO;
 import org.raul.receipesweb.service.RecipeStepService;
 import org.raul.receipesweb.utils.RecipeStepKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +41,7 @@ public class RecipeStepController {
 
     @DeleteMapping("/{recipeId}/{stepNumber}")
     public ResponseEntity<Void> deleteRecipeStep(@PathVariable Long recipeId,
-                                                   @PathVariable Integer stepNumber) {
+                                                 @PathVariable Integer stepNumber) {
         RecipeStepKey id = new RecipeStepKey(recipeId, stepNumber);
         recipeStepService.deleteRecipeStep(id);
 
