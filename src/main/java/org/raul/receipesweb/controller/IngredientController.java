@@ -1,5 +1,7 @@
 package org.raul.receipesweb.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.IngredientDTO;
 import org.raul.receipesweb.model.Ingredient;
@@ -25,17 +27,17 @@ public class IngredientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<IngredientDTO> getIngredientById(@PathVariable Long id) {
+    public ResponseEntity<IngredientDTO> getIngredientById(@PathVariable @Min(1) Long id) {
         return ResponseEntity.ok(ingredientService.getIngredientById(id));
     }
 
     @PostMapping
-    public ResponseEntity<IngredientDTO> addIngredient(@RequestBody IngredientDTO ingredientDTO) {
+    public ResponseEntity<IngredientDTO> addIngredient(@Valid @RequestBody IngredientDTO ingredientDTO) {
         return ResponseEntity.ok(ingredientService.addIngredient(ingredientDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteIngredient(@PathVariable @Min(1) Long id) {
         ingredientService.deleteIngredient(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,6 +1,7 @@
 package org.raul.receipesweb.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.UnitDTO;
 import org.raul.receipesweb.model.Unit;
@@ -26,7 +27,7 @@ public class UnitController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UnitDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<UnitDTO> getById(@PathVariable @Min(1) Long id) {
         UnitDTO unit = unitService.getUnitById(id);
 
         return ResponseEntity.ok(unit);
@@ -41,7 +42,7 @@ public class UnitController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUUnit(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUUnit(@PathVariable @Min(1) Long id) {
         unitService.deleteUnit(id);
 
         return ResponseEntity.noContent().build();

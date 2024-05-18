@@ -1,6 +1,7 @@
 package org.raul.receipesweb.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.CategoryDTO;
 import org.raul.receipesweb.model.Category;
@@ -25,7 +26,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable @Min(1) Long id) {
         CategoryDTO category = categoryService.getCategoryById(id);
         return ResponseEntity.ok(category);
     }
@@ -37,14 +38,14 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable(value = "id") Long id,
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable @Min(1) Long id,
                                                       @Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO updatedCategory = categoryService.updateCategory(id, categoryDTO);
         return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable @Min(1) Long id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build(); // success, but won't return body in response
     }

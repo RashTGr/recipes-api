@@ -1,6 +1,7 @@
 package org.raul.receipesweb.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.RecipeDTO;
 import org.raul.receipesweb.model.Recipe;
@@ -26,7 +27,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeDTO> getRecipeById(@PathVariable Long id) {
+    public ResponseEntity<RecipeDTO> getRecipeById(@PathVariable @Min(1) Long id) {
         RecipeDTO recipeDTO = recipeService.getRecipeById(id);
         return ResponseEntity.ok(recipeDTO);
     }
@@ -38,7 +39,7 @@ public class RecipeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteRecipe(@PathVariable @Min(1) Long id) {
         recipeService.deleteRecipe(id);
         return ResponseEntity.noContent().build(); // success, but won't return body in response
     }

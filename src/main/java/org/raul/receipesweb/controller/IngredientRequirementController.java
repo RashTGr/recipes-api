@@ -1,5 +1,7 @@
 package org.raul.receipesweb.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.IngredientRequirementDTO;
 import org.raul.receipesweb.service.IngredientRequirementService;
@@ -16,8 +18,8 @@ public class IngredientRequirementController {
     private final IngredientRequirementService ingredientRequirementService;
 
     @GetMapping("/{recipeId}/{ingredientId}")
-    public ResponseEntity<IngredientRequirementDTO> getIngredientRequirement(@PathVariable Long recipeId,
-                                                                             @PathVariable Long ingredientId) {
+    public ResponseEntity<IngredientRequirementDTO> getIngredientRequirement(@PathVariable @Min(1) Long recipeId,
+                                                                             @PathVariable @Min(1) Long ingredientId) {
         RecipeIngredientKey id = new RecipeIngredientKey(recipeId, ingredientId);
         IngredientRequirementDTO dto = ingredientRequirementService.getIngredientReqById(id);
 
@@ -25,7 +27,7 @@ public class IngredientRequirementController {
     }
 
     @PostMapping
-    public ResponseEntity<IngredientRequirementDTO> addIngredientRequirement(@RequestBody IngredientRequirementDTO dto) {
+    public ResponseEntity<IngredientRequirementDTO> addIngredientRequirement(@Valid @RequestBody IngredientRequirementDTO dto) {
         IngredientRequirementDTO createdDto = ingredientRequirementService.addIngredientRequirement(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
@@ -33,18 +35,20 @@ public class IngredientRequirementController {
 
     @PutMapping("/{recipeId}/{ingredientId}")
     public ResponseEntity<IngredientRequirementDTO> updateIngredientRequirement(
-            @PathVariable Long recipeId,
-            @PathVariable Long ingredientId,
-            @RequestBody IngredientRequirementDTO dto) {
+            @PathVariable @Min(1) Long recipeId,
+            @PathVariable @Min(1) Long ingredientId,
+            @Valid @RequestBody IngredientRequirementDTO dto) {
+
         dto.setRecipeId(recipeId);
         dto.setIngredientId(ingredientId);
         IngredientRequirementDTO updatedDto = ingredientRequirementService.updateIngredientRequirement(dto);
+
         return ResponseEntity.ok(updatedDto);
     }
 
     @DeleteMapping("/{recipeId}/{ingredientId}")
-    public ResponseEntity<Void> deleteIngredientRequirement(@PathVariable Long recipeId,
-                                                            @PathVariable Long ingredientId) {
+    public ResponseEntity<Void> deleteIngredientRequirement(@PathVariable @Min(1) Long recipeId,
+                                                            @PathVariable @Min(1) Long ingredientId) {
         ingredientRequirementService.deleteIngredientRequirement(recipeId, ingredientId);
 
         return ResponseEntity.noContent().build();
