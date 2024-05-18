@@ -25,5 +25,8 @@ public class IngredientRequirement {
     private Ingredient ingredient;
 
     private Double quantity;
-    private String unit;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "unit_id")
+    private Unit unit;
 }

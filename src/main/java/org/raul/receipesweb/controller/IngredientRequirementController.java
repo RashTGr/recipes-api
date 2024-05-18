@@ -30,4 +30,23 @@ public class IngredientRequirementController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }
+
+    @PutMapping("/{recipeId}/{ingredientId}")
+    public ResponseEntity<IngredientRequirementDTO> updateIngredientRequirement(
+            @PathVariable Long recipeId,
+            @PathVariable Long ingredientId,
+            @RequestBody IngredientRequirementDTO dto) {
+        dto.setRecipeId(recipeId);
+        dto.setIngredientId(ingredientId);
+        IngredientRequirementDTO updatedDto = ingredientRequirementService.updateIngredientRequirement(dto);
+        return ResponseEntity.ok(updatedDto);
+    }
+
+    @DeleteMapping("/{recipeId}/{ingredientId}")
+    public ResponseEntity<Void> deleteIngredientRequirement(@PathVariable Long recipeId,
+                                                            @PathVariable Long ingredientId) {
+        ingredientRequirementService.deleteIngredientRequirement(recipeId, ingredientId);
+
+        return ResponseEntity.noContent().build();
+    }
 }
