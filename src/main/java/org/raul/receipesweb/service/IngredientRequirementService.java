@@ -1,6 +1,7 @@
 package org.raul.receipesweb.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.raul.receipesweb.dto.IngredientRequirementDTO;
 import org.raul.receipesweb.exception.ResourceNotFoundException;
 import org.raul.receipesweb.model.Ingredient;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class IngredientRequirementService {
 
     private final IngredientRequirementRepository ingredientRequirementRepository;
@@ -24,6 +26,9 @@ public class IngredientRequirementService {
     private final UnitRepository unitRepository;
 
     public IngredientRequirementDTO getIngredientReqById(RecipeIngredientKey id) {
+        log.info("Fetching ingredient requirement for recipe ID {} and ingredient ID {}",
+                id.getRecipeId(), id.getIngredientId());
+
         IngredientRequirement ingredientReq = ingredientRequirementRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find recipe with id :: " + id.getRecipeId()
                         + " and ingredient ID: " + id.getIngredientId()));
@@ -44,6 +49,9 @@ public class IngredientRequirementService {
     }
 
     public IngredientRequirementDTO addIngredientRequirement(IngredientRequirementDTO dto) {
+        log.info("Adding ingredient requirement for recipe ID {} and ingredient ID {}",
+                dto.getRecipeId(), dto.getIngredientId());
+
         Recipe recipe = recipeRepository.findById(dto.getRecipeId())
                 .orElseThrow(() -> new RuntimeException("Recipe not found with ID: " + dto.getRecipeId()));
         Ingredient ingredient = ingredientRepository.findById(dto.getIngredientId())
@@ -59,6 +67,8 @@ public class IngredientRequirementService {
         requirement.setUnit(unit);
 
         ingredientRequirementRepository.save(requirement);
+        log.info("Added ingredient requirement with recipe ID {} and ingredient ID {}",
+                dto.getRecipeId(), dto.getIngredientId());
 
         return new IngredientRequirementDTO(
                 requirement.getRecipe().getId(),
@@ -69,6 +79,9 @@ public class IngredientRequirementService {
     }
 
     public IngredientRequirementDTO updateIngredientRequirement(IngredientRequirementDTO dto) {
+        log.info("Updating ingredient requirement for recipe ID {} and ingredient ID {}",
+                dto.getRecipeId(), dto.getIngredientId());
+
         RecipeIngredientKey id = new RecipeIngredientKey(dto.getRecipeId(), dto.getIngredientId());
         Unit unit = unitRepository.findById(dto.getUnitId())
                 .orElseThrow(() -> new RuntimeException("Unit not found with ID: " + dto.getUnitId()));
@@ -79,6 +92,9 @@ public class IngredientRequirementService {
         existing.setUnit(unit);
 
         ingredientRequirementRepository.save(existing);
+        log.info("Updated ingredient requirement with recipe ID {} and ingredient ID {}",
+                dto.getRecipeId(), dto.getIngredientId());
+
         return new IngredientRequirementDTO(
                 existing.getRecipe().getId(),
                 existing.getIngredient().getId(),
@@ -88,7 +104,10 @@ public class IngredientRequirementService {
     }
 
     public void deleteIngredientRequirement(Long recipeId, Long ingredientId) {
+        log.info("Deleting ingredient requirement for recipe ID {} and ingredient ID {}", recipeId, ingredientId);
+
         RecipeIngredientKey id = new RecipeIngredientKey(recipeId, ingredientId);
         ingredientRequirementRepository.deleteById(id);
+        log.info("Deleted ingredient requirement with recipe ID {} and ingredient ID {}", recipeId, ingredientId);
     }
 }

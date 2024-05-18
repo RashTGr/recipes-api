@@ -21,6 +21,7 @@ public class CategoryService {
 
     public List<CategoryDTO> getAllCategories() {
         log.info("Fetching categories from the db");
+
         List<Category> categories = categoryRepository.findAll();
 
         return categories.stream().map(category -> new CategoryDTO(
@@ -31,6 +32,7 @@ public class CategoryService {
 
     public CategoryDTO getCategoryById(Long id) {
         log.info("Fetching category by id {}", id);
+
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't found category with id :: " + id));
 
@@ -43,26 +45,30 @@ public class CategoryService {
         Category cat = new Category();
         cat.setName(categoryDTO.getName());
         Category saved = categoryRepository.save(cat);
+        log.info("Added new category with ID: {}", saved.getId());
 
         return convertToDTO(saved);
     }
 
     public CategoryDTO updateCategory(Long id, CategoryDTO categoryDTO) {
+        log.info("Updating category with ID: {}", id);
+
         Category cat = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't found category with id :: " + id));
         cat.setName(categoryDTO.getName());
-        log.info("Updated category by id {} and name: {}", id, categoryDTO.getName());
         Category updated = categoryRepository.save(cat);
+        log.info("Updated category ID: {} with new name: {}", id, categoryDTO.getName());
 
         return convertToDTO(updated);
     }
 
     public void deleteCategory(Long id) {
-        log.debug("Deleting category id {} from db", id);
+        log.info("Deleting category with ID: {}", id);
+
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't found category with id :: " + id));
-        log.info("Deleted category {} ", id);
         categoryRepository.delete(category);
+        log.info("Deleted category with ID: {}", id);
     }
 
     private CategoryDTO convertToDTO(Category category) {
