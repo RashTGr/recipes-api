@@ -1,5 +1,6 @@
 package org.raul.receipesweb.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.UnitDTO;
 import org.raul.receipesweb.model.Unit;
@@ -31,8 +32,9 @@ public class UnitController {
         return ResponseEntity.ok(unit);
     }
 
+    // Invalid or missing data returns 400 Bad Request
     @PostMapping
-    public ResponseEntity<UnitDTO> addNewUnit(@RequestBody UnitDTO dto) {
+    public ResponseEntity<UnitDTO> addNewUnit(@Valid @RequestBody UnitDTO dto) {
         UnitDTO saved = unitService.addUnit(dto);
 
         return new ResponseEntity<>(saved, HttpStatus.CREATED);

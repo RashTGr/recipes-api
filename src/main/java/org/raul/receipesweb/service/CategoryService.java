@@ -37,18 +37,24 @@ public class CategoryService {
         return new CategoryDTO(category.getId(), category.getName());
     }
 
-    public Category addCategory(Category category) {
-        log.info("Adding new category: {}", category.getName());
-        return categoryRepository.save(category);
+    public CategoryDTO addCategory(CategoryDTO categoryDTO) {
+        log.info("Adding new category: {}", categoryDTO.getName());
+
+        Category cat = new Category();
+        cat.setName(categoryDTO.getName());
+        Category saved = categoryRepository.save(cat);
+
+        return convertToDTO(saved);
     }
 
-    public Category updateCategory(Long id, Category categoryName) {
-        Category category = categoryRepository.findById(id)
+    public CategoryDTO updateCategory(Long id, CategoryDTO categoryDTO) {
+        Category cat = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't found category with id :: " + id));
+        cat.setName(categoryDTO.getName());
+        log.info("Updated category by id {} and name: {}", id, categoryDTO.getName());
+        Category updated = categoryRepository.save(cat);
 
-        category.setName(categoryName.getName());
-        log.info("Updated category by id {} and name: {}", id, categoryName.getName());
-        return categoryRepository.save(category);
+        return convertToDTO(updated);
     }
 
     public void deleteCategory(Long id) {
@@ -57,5 +63,9 @@ public class CategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't found category with id :: " + id));
         log.info("Deleted category {} ", id);
         categoryRepository.delete(category);
+    }
+
+    private CategoryDTO convertToDTO(Category category) {
+        return new CategoryDTO(category.getId(), category.getName());
     }
 }

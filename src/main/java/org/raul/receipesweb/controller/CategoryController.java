@@ -1,5 +1,6 @@
 package org.raul.receipesweb.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.raul.receipesweb.dto.CategoryDTO;
 import org.raul.receipesweb.model.Category;
@@ -30,15 +31,15 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-        Category saved = categoryService.addCategory(category);
+    public ResponseEntity<CategoryDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+        CategoryDTO saved = categoryService.addCategory(categoryDTO);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable(value = "id") Long categoryId,
-                                                   @RequestBody Category categoryName) {
-        Category updatedCategory = categoryService.updateCategory(categoryId, categoryName);
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable(value = "id") Long id,
+                                                      @Valid @RequestBody CategoryDTO categoryDTO) {
+        CategoryDTO updatedCategory = categoryService.updateCategory(id, categoryDTO);
         return ResponseEntity.ok(updatedCategory);
     }
 
