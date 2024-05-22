@@ -26,7 +26,7 @@ public class SecurityConfig {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
-    private static final String[] AUTH_WHITELIST = {
+/*    private static final String[] AUTH_WHITELIST = {
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
@@ -38,7 +38,7 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/signup",
             "/signin"
-    };
+    };*/
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
