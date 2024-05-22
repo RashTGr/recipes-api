@@ -1,8 +1,5 @@
 package org.raul.receipesweb.config;
 
-import org.raul.receipesweb.filter.JwtRequestFilter;
-import org.raul.receipesweb.service.JwtUserDetailsService;
-import org.raul.receipesweb.utils.JwtTokenUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

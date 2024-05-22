@@ -1,5 +1,6 @@
 package org.raul.receipesweb.model;
 
+
 import java.io.Serializable;
 
 public class JwtResponse implements Serializable {

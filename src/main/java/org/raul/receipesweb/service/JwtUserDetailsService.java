@@ -1,6 +1,8 @@
 package org.raul.receipesweb.service;
 
 import org.raul.receipesweb.dto.UserDTO;
+import org.raul.receipesweb.model.MyUser;
+import org.raul.receipesweb.repository.MyUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,27 +16,25 @@ import java.util.ArrayList;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private MyUserRepository myUserRepository;
 
     @Autowired
-    public JwtUserDetailsService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if ("javainuse".equals(username)) {
-            return new User("javainuse", passwordEncoder.encode("password"),
-                    new ArrayList<>());
-        } else {
+        MyUser myUser = myUserRepository.findByUsername(username);
+        if (myUser == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
+        return new User(myUser.getUsername(), myUser.getPassword(), new ArrayList<>());
     }
 
-    public UserDTO save(UserDTO user) {
-        UserDTO newUser = new UserDTO();
+    public MyUser save(UserDTO user) {
+        MyUser newUser = new MyUser();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        return newUser;
+        return myUserRepository.save(newUser);
     }
 }
